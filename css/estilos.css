@@ -1,0 +1,45 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+
+}
+.cell{
+    cursor: pointer;
+    width: 20px;
+    color: #fff;
+}
+.active{
+    background-color: blue;
+    color: blue;
+}
+
+.contenedor
+{
+    width:  100%;
+    height: auto;
+    overflow: hidden;
+}
+.titulo
+{
+    width:  100%;
+    padding: 15;
+
+}
+
+.empezar
+{
+    width: auto;
+    padding: 5px;
+    overflow: hidden;
+}
+
+.empezar button
+{
+    padding: 10px;
+    width: 50%;
+    float: left;
+    cursor: pointer;
+}
