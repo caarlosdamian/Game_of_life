@@ -1,22 +1,158 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-	<meta charset="UTF-8">
-	<title>Conway's Game of Life</title>
-	<script type="text/javascript" src="css/jquery.js"></script>
-	<link rel="stylesheet" type="text/css" href="estilos.css">
-</head>
-<body>
-	<div class="contenedor">
-            <div class="titulo">
-                 <h1>Conway's Game of Life</h1>
-            </div>
-            <p><input > <input> <button > Size</button></p>
-            <div class="empezar">
-                <button >Start</button>
-                <button >Clean</button>
-            </div>
+<meta charset="UTF-8">
+<html>
+	<head>
+            <script type="text/javascript" src="js/jquery.js"></script>
+            
+            <link rel="stylesheet" type="text/css" href="css/estilos.css">
 
+	<title>Conway's Game of Life</title>
+	</head>
+	<header><center><h1>Conway's Game of Life</h1></center></header>
+	<body onload="startgame()">
+        	<div class="contenedor"></div>
+            <center>
+                    <p><input id="x" type="text" placeholder="width" > <input id="y" type="text" placeholder="height"> <button onclick="changesize()"> Size</button></p>
+                    <div class="empezar">
+                    <button onclick=" Start()">Start</button>
+                    <button onclick="Clean()">Clean</button>
+                    </div>
+            </center>
+		<center>
+			<canvas id="board" class="table" width="500" height="400"></canvas>
+        </center>
     </div>
+		
+        <script language="JavaScript">
+
+function Start() {
+    if (!timer) {
+        timer = setInterval("repetition()", 30  );
+    }
+}
+function repetition() {
+        turno();
+        drawboard();
+    }
+         
+function stop() {
+    clearInterval(timer);
+    timer = undefined;
+}
+         
+function Clean() {
+    stop();
+    startgame();
+}
+
+function onMouseMove(evt) {
+            ctx.fillStyle="#3498DB";        
+            ctx.fillRect(evt.clientX - canvas.offsetLeft, evt.clientY - canvas.offsetTop, celdsize, celdsize);
+        }
+         
+function onCanvasClick(evt) {
+            var x = evt.clientX - canvas.offsetLeft;
+            var y = evt.clientY - canvas.offsetTop;
+            var boardX = parseInt(x/celdsize);
+            var boardY = parseInt(y/celdsize);
+            if (live(boardX, boardY) ) board[boardX][boardY] = 0;
+            else board[boardX][boardY] = 1;
+            drawboard();
+        }
+         
+function neighboringnumber(x, y) { 
+
+    var counter=0;
+    if (live(x-1, y)) counter++;
+    if (live(x-1, y-1)) counter++;
+    if (live(x-1, y+1)) counter++;
+    if (live(x, y-1)) counter++;
+    if (live(x, y+1)) counter++;
+    if (live(x+1, y-1)) counter++;
+    if (live(x+1, y+1)) counter++;
+    if (live(x+1, y)) counter++;
+    return counter;
+}
+
+function live(x,y) {
+            if (board[x] ) 
+                if (board[x][y]==1) return true;
+            return false;
+        }
+         
+function turno() {
+    var newboard = [];
+    for (i= 0; i< ancho; i++) {
+        newboard[i] = [];
+        for (j= 0; j< alto; j++ ) {
+            var neighbors = neighboringnumber(i, j);
+            if ( live(i,j) && neighbors<2)newboard[i][j]=0;
+            else if (live(i,j) && neighbors>3 ) newboard[i][j]=0;
+            else if (live(i,j) && (neighbors==2||neighbors==3))newboard[i][j]= 1;
+            else if (!live(i,j) && (neighbors== 3) ) newboard[i][j] = 1;
+            else newboard[i][j] = 0;
+        }
+    }
+    board = newboard;
+}
+var cx=800;
+var cy=400;
+var celdsize=25;
+var ancho =cx/25;
+var alto =cy/25;
+var board, canvas, ctx, timer, i, j;
+
+
+var changesize=function(){
+    cx=0;
+    cy=0;
+    cx=document.getElementById('x').value;
+    cy=document.getElementById('y').value;
+    console.log(cy);
+    document.getElementsByClassName('table')[0].width=(cx*10)+"px";
+    document.getElementsByClassName('table')[0].height=(cy*10)+"px";
+    console.log(document.getElementsByClassName('table')[0].width=(cx*10));
+    console.log(document.getElementsByClassName('table')[0].height=(cy*10));
+    ancho=cx*10;
+    alto=cy*10;
+    drawboard();
+}
+function startgame() {
+    canvas=document.getElementById("board");
+    ctx=canvas.getContext("2d");      
+    canvas.addEventListener("click", onCanvasClick, false); 
+    initializeboard();
+    drawboard();
+}
+
+
+function initializeboard() {
+    board = [];
+    for ( i = 0; i < ancho; i++) {
+        board[i] = [];
+        for ( j = 0; j < alto; j++ ) {
+            board[i][j] = 0;
+        }
+    }
+}
+         
+function drawboard() {
+    for (i = 0; i < ancho; i++) {
+        for (j = 0; j < alto; j++ ) {
+            if ( board[i][j] == 0){
+                ctx.fillStyle = "#EC8604";
+            } else {
+                ctx.fillStyle = "#3B3227";
+            }
+            ctx.strokeStyle = '#F4F4F0'; 
+            ctx.lineWidth = 8;
+            ctx.strokeRect(i*celdsize, j*celdsize, celdsize, celdsize);                   
+            ctx.fillRect(i*celdsize, j*celdsize, celdsize, celdsize);      
+        }
+    }
+}
+
+            </script>	
 </body>
+
 </html>

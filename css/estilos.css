@@ -6,40 +6,29 @@
     -moz-box-sizing: border-box;
 
 }
-.cell{
-    cursor: pointer;
-    width: 20px;
-    color: #fff;
-}
-.active{
-    background-color: blue;
-    color: blue;
-}
+h1 { 
+    color: #111; 
+    font-family: 'Open Sans Condensed', sans-serif; 
+    font-size: 64px; font-weight: 700; line-height: 64px; 
+    margin: 0 0 0; padding: 20px 30px; text-align: center; 
+    text-transform: uppercase; }
 
-.contenedor
+
+contenedor
 {
     width:  100%;
     height: auto;
     overflow: hidden;
 }
-.titulo
-{
-    width:  100%;
-    padding: 15;
 
+button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
 
-.empezar
-{
-    width: auto;
-    padding: 5px;
-    overflow: hidden;
-}
-
-.empezar button
-{
-    padding: 10px;
-    width: 50%;
-    float: left;
-    cursor: pointer;
-}
